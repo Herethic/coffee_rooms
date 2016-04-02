@@ -10,7 +10,7 @@ import {COFFEE_DETAILS} from "./cafe-details.data";
 @Component({
     selector: 'cafe-details',
     template:`
-        <div *ngIf="cafeId">
+        <div>
           <h2>{{cafe.name}} details!</h2>
           <div><label>id: </label>{{cafe.id}}</div>
           <div>

@@ -4,9 +4,22 @@ import {Cafe} from './cafe';
 @Component({
     selector: 'cafe',
     template: `
-        <h2>{{cafe.name}}</h2>
-        <img src={{cafe.picture}}>
-    `
+        <div class="cafe">
+            <h2>{{cafe.name}}</h2>
+            <img src={{cafe.picture}}>
+        </div>
+    `,
+    styles:[`
+        .cafe {
+            display: inline-block;
+            margin: 25px;
+            max-width: 300px;
+         }
+
+         img {
+            max-width: 220px;
+         }
+    `]
 })
 export class CafeComponent {
     @Input()
