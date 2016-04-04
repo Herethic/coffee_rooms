@@ -1,9 +1,11 @@
-import {Component} from 'angular2/core';
+import {Component, OnInit} from 'angular2/core';
 
-import {CafeComponent} from './cafe.component';
-import {COFFEE_ROOMS} from './cafe.data';
-import {Cafe} from "./cafe";
+import {CafeComponent} from './cafe/cafe.component';
+import {Cafe} from "./cafe/cafe";
+import {CafeService} from './cafe/cafe.service';
+
 import {CafeDetailsComponent} from "./cafe-details.component";
+
 import {PageHeader} from "./header.component";
 
 @Component({
@@ -13,13 +15,23 @@ import {PageHeader} from "./header.component";
         <cafe *ngFor="#cafe of coffeeRooms" (click)="onSelect(cafe)" [cafe]="cafe"></cafe>
         <cafe-details  *ngIf="chosenCafe" [cafeId]="chosenCafe"></cafe-details>
   `,
-    directives: [CafeComponent, CafeDetailsComponent, PageHeader]
+    directives: [CafeComponent, CafeDetailsComponent, PageHeader],
+    providers: [CafeService]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
     title = 'List of coffee rooms';
-    coffeeRooms = COFFEE_ROOMS;
+    coffeeRooms: Cafe[];
     chosenCafe: number;
 
+    constructor(private _cafeService: CafeService) { }
+
+    getHeroes() {
+        this._cafeService.getCoffeeRooms().then(heroes => this.coffeeRooms = heroes);
+    }
+
+    ngOnInit() {
+        this.getHeroes();
+    }
     onSelect(cafe: Cafe) {
         this.chosenCafe = cafe.id;
     }
