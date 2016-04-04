@@ -22,6 +22,7 @@ import {CafeDetailsService} from "./cafe-details.service";
             </div>
           </div>
         </div>
+        <div *ngIf="!synced">Loading...</div>
     `,
     providers: [CafeDetailsService]
 })

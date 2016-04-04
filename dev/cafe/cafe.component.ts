@@ -14,6 +14,7 @@ import {Cafe} from './cafe';
             display: inline-block;
             margin: 25px;
             max-width: 300px;
+            cursor: pointer;
          }
 
          img {
