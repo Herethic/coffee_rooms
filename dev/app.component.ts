@@ -4,7 +4,7 @@ import {CafeComponent} from './cafe/cafe.component';
 import {Cafe} from "./cafe/cafe";
 import {CafeService} from './cafe/cafe.service';
 
-import {CafeDetailsComponent} from "./cafe-details.component";
+import {CafeDetailsComponent} from "./cafe-details/cafe-details.component";
 
 import {PageHeader} from "./header.component";
 
@@ -25,12 +25,12 @@ export class AppComponent implements OnInit {
 
     constructor(private _cafeService: CafeService) { }
 
-    getHeroes() {
-        this._cafeService.getCoffeeRooms().then(heroes => this.coffeeRooms = heroes);
+    getCoffeeRooms() {
+        this._cafeService.getCoffeeRooms().then(coffeeRooms => this.coffeeRooms = coffeeRooms);
     }
 
     ngOnInit() {
-        this.getHeroes();
+        this.getCoffeeRooms();
     }
     onSelect(cafe: Cafe) {
         this.chosenCafe = cafe.id;

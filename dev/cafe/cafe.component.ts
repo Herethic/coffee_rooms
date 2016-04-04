@@ -1,4 +1,4 @@
-import {Component, Input} from 'angular2/core';
+import {Component, Input, } from 'angular2/core';
 import {Cafe} from './cafe';
 
 @Component({
