@@ -21,7 +21,8 @@ import {CafeDetailsComponent} from "./cafe-details/cafe-details.component";
     {
         path: '/coffee_rooms',
         name: 'CoffeeRooms',
-        component: CafeList
+        component: CafeList,
+        useAsDefault: true
     },
     {
         path: '/cafe/:id',
