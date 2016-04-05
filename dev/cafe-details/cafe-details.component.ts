@@ -1,11 +1,12 @@
 import {
     Component,
     Input,
-    SimpleChange
+    OnInit
 } from 'angular2/core';
 
+import {RouteParams} from 'angular2/router';
+
 import {CafeDetails} from "./cafe-details";
-import {COFFEE_DETAILS} from "./mock-cafe-details";
 import {CafeDetailsService} from "./cafe-details.service";
 
 @Component({
@@ -26,22 +27,24 @@ import {CafeDetailsService} from "./cafe-details.service";
     `,
     providers: [CafeDetailsService]
 })
-export class CafeDetailsComponent {
+export class CafeDetailsComponent implements OnInit {
     @Input() cafeId: number;
 
     cafeDetails = CafeDetails;
     private synced: boolean;
 
-    constructor(private _cafeDetailsService: CafeDetailsService) { }
+    constructor(
+        private _cafeDetailsService: CafeDetailsService,
+        private _routeParams: RouteParams
+    ) { }
 
-    ngOnChanges(changes: {[propName: string]: SimpleChange}) {
-        if (this.cafeId) {
-            this.synced = false;
-            this._cafeDetailsService.getCafeDetailsSlowly(this.cafeId - 1)
-                .then((cafeDetails) => {
-                    this.cafeDetails = cafeDetails;
-                    this.synced = true;
-                });
-        }
+    ngOnInit() {
+        const id = parseInt(this._routeParams.get('id'));
+        this.synced = false;
+        this._cafeDetailsService.getCafeDetailsSlowly(id - 1)
+            .then((cafeDetails) => {
+                this.cafeDetails = cafeDetails;
+                this.synced = true;
+            });
     }
 }

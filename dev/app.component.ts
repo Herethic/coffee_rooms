@@ -1,39 +1,35 @@
-import {Component, OnInit} from 'angular2/core';
-
-import {CafeComponent} from './cafe/cafe.component';
-import {Cafe} from "./cafe/cafe";
-import {CafeService} from './cafe/cafe.service';
-
-import {CafeDetailsComponent} from "./cafe-details/cafe-details.component";
+import {Component} from 'angular2/core';
+import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS} from 'angular2/router';
 
 import {PageHeader} from "./header.component";
+import {CafeList} from "./cafe-list.component";
+import {CafeDetailsComponent} from "./cafe-details/cafe-details.component";
 
 @Component({
     selector: 'my-app',
     template:`
         <page-header title={{title}}></page-header>
-        <cafe *ngFor="#cafe of coffeeRooms" (click)="onSelect(cafe)" [cafe]="cafe"></cafe>
-        <cafe-details  *ngIf="chosenCafe" [cafeId]="chosenCafe"></cafe-details>
+        <nav>
+            <a [routerLink]="['CoffeeRooms']">Coffee Rooms</a>
+        </nav>
+        <router-outlet></router-outlet>
   `,
-    directives: [CafeComponent, CafeDetailsComponent, PageHeader],
-    providers: [CafeService]
+    directives: [ROUTER_DIRECTIVES],
+    providers: [ROUTER_PROVIDERS]
 })
-export class AppComponent implements OnInit {
+@RouteConfig([
+    {
+        path: '/coffee_rooms',
+        name: 'CoffeeRooms',
+        component: CafeList
+    },
+    {
+        path: '/cafe/:id',
+        name: 'CafeDetails',
+        component: CafeDetailsComponent
+    }
+])
+export class AppComponent{
     title = 'List of coffee rooms';
-    coffeeRooms: Cafe[];
-    chosenCafe: number;
-
-    constructor(private _cafeService: CafeService) { }
-
-    getCoffeeRooms() {
-        this._cafeService.getCoffeeRooms().then(coffeeRooms => this.coffeeRooms = coffeeRooms);
-    }
-
-    ngOnInit() {
-        this.getCoffeeRooms();
-    }
-    onSelect(cafe: Cafe) {
-        this.chosenCafe = cafe.id;
-    }
 }
 
